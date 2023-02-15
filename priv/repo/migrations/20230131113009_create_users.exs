@@ -2,8 +2,7 @@ defmodule RealDealApi.Repo.Migrations.CreateUsers do
   use Ecto.Migration
 
   def change do
-    create table(:users, primary_key: false) do
-      add :id, :id, primary_key: true
+    create table(:users) do
       add :full_name, :string
       add :gender, :string
       add :biography, :text

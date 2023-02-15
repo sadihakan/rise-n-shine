@@ -2,6 +2,8 @@ defmodule RealDealApi.Users.User do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @primary_key {:id, :id, autogenerate: true}
+  @foreign_key_type :id
   schema "users" do
     field :biography, :string
     field :full_name, :string
