@@ -44,7 +44,17 @@ defmodule RealDealApiWeb.AccountController do
     end
   end
 
-  def show(conn, %{"id" => _id}) do
+  def sign_out(conn, %{}) do
+    account = conn.assigns[:account]
+    token = Guardian.Plug.current_token(conn)
+    Guardian.revoke(token)
+    conn
+    |> Plug.Conn.clear_session()
+    |> put_status(:ok)
+    |> render("account_token.json", %{account: account, token: nil})
+  end
+
+  def show(conn, _opts) do
     # account = Accounts.get_account!(id)
     render(conn, "show.json", account: conn.assigns.account)
   end

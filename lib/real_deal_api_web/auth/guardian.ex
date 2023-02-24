@@ -38,7 +38,27 @@ defmodule RealDealApiWeb.Auth.Guardian do
   end
 
   defp create_token(account) do
-    {:ok, token, _claims} = encode_and_sign(account)
+    {:ok, token, _claims} = encode_and_sign(account,  %{aud: "real_deal_api"})
     {:ok, account, token}
   end
+
+  def after_encode_and_sign(resource, claims, token, _options) do
+    with {:ok, _} <- Guardian.DB.after_encode_and_sign(resource, claims["typ"], claims, token) do
+      {:ok, token}
+    end
+  end
+
+  def on_verify(claims, token, _options) do
+    with {:ok, _} <- Guardian.DB.on_verify(claims, token) do
+      {:ok, claims}
+    end
+  end
+
+  def on_revoke(claims, token, _options) do
+    with {:ok, _} <- Guardian.DB.on_revoke(claims, token) do
+      {:ok, claims}
+    end
+  end
+
+
 end

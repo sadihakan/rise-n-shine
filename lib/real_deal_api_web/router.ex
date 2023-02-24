@@ -2,11 +2,11 @@ defmodule RealDealApiWeb.Router do
   use RealDealApiWeb, :router
   use Plug.ErrorHandler
 
-  defp handle_errors(conn, %{reason: %Phoenix.Router.NoRouteError{message: message}}) do
+  def handle_errors(conn, %{reason: %Phoenix.Router.NoRouteError{message: message}}) do
     conn |> json(%{errors: message}) |> halt()
   end
 
-  defp handle_errors(conn, %{reason: %{message: message}}) do
+  def handle_errors(conn, %{reason: %{message: message}}) do
     conn |> json(%{errors: message}) |> halt()
   end
 
@@ -30,6 +30,7 @@ defmodule RealDealApiWeb.Router do
   scope "/api", RealDealApiWeb do
     pipe_through [:api, :auth]
     get "/accounts", AccountController, :show
+    post "accounts/sign_out", AccountController, :sign_out
     put "/accounts", AccountController, :update
   end
 end

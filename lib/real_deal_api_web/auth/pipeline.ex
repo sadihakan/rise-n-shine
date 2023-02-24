@@ -3,9 +3,8 @@ defmodule RealDealApiWeb.Auth.Pipeline do
   module: RealDealApiWeb.Auth.Guardian,
   error_handler: RealDealApiWeb.Auth.GuardianErrorHandler
 
-plug Guardian.Plug.VerifySession
-plug Guardian.Plug.VerifyHeader
-plug Guardian.Plug.EnsureAuthenticated
-plug Guardian.Plug.LoadResource
-
+  plug Guardian.Plug.VerifySession
+  plug Guardian.Plug.VerifyHeader
+  plug Guardian.Plug.EnsureAuthenticated
+  plug Guardian.Plug.LoadResource
 end
