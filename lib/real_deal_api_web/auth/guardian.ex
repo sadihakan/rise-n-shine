@@ -53,8 +53,8 @@ defmodule RealDealApiWeb.Auth.Guardian do
   defp token_options(type) do
     case type do
       :access -> [token_type: "access", ttl: {2, :hour}]
-      :reset -> [token_type: "reset", ttl: {15, :minute}]
-      :admin -> [token_type: "admin", ttl: {90, :day}]
+      # :reset -> [token_type: "reset", ttl: {15, :minute}]
+      # :admin -> [token_type: "admin", ttl: {90, :day}]
     end
   end
 
