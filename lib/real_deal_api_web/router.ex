@@ -1,4 +1,5 @@
 defmodule RealDealApiWeb.Router do
+
   use RealDealApiWeb, :router
   use Plug.ErrorHandler
 
@@ -33,5 +34,6 @@ defmodule RealDealApiWeb.Router do
     post "/accounts/sign_out", AccountController, :sign_out
     get "/accounts/refresh_session", AccountController, :refresh_session
     put "/accounts", AccountController, :update
+    put "/users", UserController, :update
   end
 end

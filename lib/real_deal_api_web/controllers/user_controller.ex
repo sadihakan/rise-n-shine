@@ -4,6 +4,10 @@ defmodule RealDealApiWeb.UserController do
   alias RealDealApi.Users
   alias RealDealApi.Users.User
 
+  import RealDealApiWeb.Auth.AuthorizedPlug
+
+  plug :is_authorized when action in [:update, :delete]
+
   action_fallback RealDealApiWeb.FallbackController
 
   def index(conn, _params) do
@@ -24,10 +28,8 @@ defmodule RealDealApiWeb.UserController do
     render(conn, "show.json", user: user)
   end
 
-  def update(conn, %{"id" => id, "user" => user_params}) do
-    user = Users.get_user!(id)
-
-    with {:ok, %User{} = user} <- Users.update_user(user, user_params) do
+  def update(conn, %{"user" => user_params}) do
+    with {:ok, %User{} = user} <- Users.update_user(conn.assigns.account.user, user_params) do
       render(conn, "show.json", user: user)
     end
   end
